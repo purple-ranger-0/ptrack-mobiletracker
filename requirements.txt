@@ -1,0 +1,9 @@
+# 📋 Requirements for Ptrack-MobileTracker
+# Install with: pip install -r requirements.txt
+
+flask==2.3.2          # Web server framework
+phonenumbers==8.13.22 # Phone number parsing/validation
+requests==2.31.0      # HTTP requests for IP geolocation
+geopy==2.3.0          # GPS coordinates to address
+webbrowser==0.2.1     # Open URLs in default browser (built-in but listed for clarity)
+python-dotenv==1.0.0  # Optional: For environment variables (if added later)
