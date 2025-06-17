@@ -1,33 +1,79 @@
 # 📱 Ptrack-MobileTracker
 
-![Banner](https://via.placeholder.com/800x200?text=Ptrack+Mobile+Tracker+Banner)  
-*A phone number intelligence tool for educational purposes.*
+![Banner](https://via.placeholder.com/800x200?text=Ptrack+Mobile+Tracker+Banner)
+
+*A phone number intelligence and educational tracking tool by **Purple Ranger**.*
+
+🔗 Visit our site: [https://purplehub.serveo.net](https://purplehub.serveo.net)  
+💬 Contact on WhatsApp: [https://wa.link/nhd7st](https://wa.link/nhd7st)
+📬 mail :purplehub@aol.com
 
 ---
 
 ## ⚠️ Disclaimer
-**This tool is for educational and ethical use only.**  
-- Always obtain **explicit consent** before tracking any phone number.  
-- Misuse of this tool for malicious purposes is **strictly prohibited**.  
-- The developer is **not responsible** for illegal use.
+
+> **This tool is strictly for educational and ethical use only.**
+
+- ✅ Use only with **explicit consent** from the person being tracked.  
+- ❌ Any misuse for illegal or malicious purposes is **strictly prohibited**.  
+- ⚖️ The developer assumes **no responsibility** for misuse or legal consequences.  
 
 ---
 
 ## 🌟 Features
-- Fetch carrier, region, and timezone from a phone number.  
-- Generate a phishing link (for educational demo) to approximate location.  
-- Lightweight Flask-based web server for local tracking.  
-- Logs visitor data (IP, device info, GPS coordinates if shared).  
+
+- 🔍 Extract **carrier**, **region**, and **timezone** from phone numbers using `phonenumbers`.
+- 📡 Generate a **phishing page** (for demonstration purposes) to approximate target **location**.
+- 🌐 Runs a lightweight **Flask**-based local web server.
+- 📊 **Logs visitor data** including:
+  - IP address  
+  - Device information  
+  - GPS coordinates (if permission granted)  
+- 🌍 If GPS access is denied, it falls back to **IP-based geolocation**.
+- 🧩 Compatible with **Ngrok**, **Cloudflare Tunnel**, or any custom domain setup for WAN access.
 
 ---
 
 ## 📥 Installation
 
-### **Requirements**
+### 🔧 Requirements
+
 - Python 3.8+  
 - `pip` (Python package manager)  
-- Git (to clone the repository)  
+- `git`
 
-#### **Install Dependencies**:
+---
+
+### 📱 Installation on **Termux (Android)**
+
+1. Install **Termux** from [F-Droid](https://f-droid.org/).  
+2. Run the following commands:
+
 ```bash
-pip install phonenumbers flask requests geopy
+pkg update && pkg upgrade -y
+pkg install python git -y
+git clone https://github.com/purple-ranger-0/ptrack-mobiletracker.git
+cd ptrack-mobiletracker
+pip install -r requirements.txt
+```
+### installation on linux
+```bash
+sudo apt update && sudo apt install python3 python3-pip git -y
+git clone https://github.com/purple-ranger-0/ptrack-mobiletracker.git
+cd ptrack-mobiletracker
+pip3 install -r requirements.txt
+```
+### usage
+```bash
+python3 ptrack.py +1234567890
+```
+To use this link wan level use tunel you prefered
+
+Example 
+```bash
+ngrok http 5000
+```
+```bash
+cloudflared tunnel --url http://localhost:5000
+```
+thank you for visiting happy hacking
