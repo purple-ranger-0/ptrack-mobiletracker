@@ -65,7 +65,7 @@ pip3 install -r requirements.txt
 ```
 ### usage
 ```bash
-python3 ptrack.py +1234567890
+python3 ptrack.py +9197*******8
 ```
 To use this link wan level use tunel you prefered
 
