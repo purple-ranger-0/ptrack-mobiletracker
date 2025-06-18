@@ -71,9 +71,9 @@ To use this link wan level use tunel you prefered
 
 Example 
 ```bash
-ngrok http 5000
+ngrok http 80
 ```
 ```bash
-cloudflared tunnel --url http://localhost:5000
+cloudflared tunnel --url http://localhost:80
 ```
-thank you for visiting happy hacking
+Thank you for visiting us
