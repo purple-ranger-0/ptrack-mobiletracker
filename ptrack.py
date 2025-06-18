@@ -163,8 +163,8 @@ def show_phone_info():
 def main():
     show_banner()
     show_phone_info()
-    webbrowser.open("http://localhost:5000")
-    app.run(host='0.0.0.0', port=5000)
+    webbrowser.open("http://localhost:80")
+    app.run(host='0.0.0.0', port=80)
 
 # ========== Run ==========
 if __name__ == "__main__":
