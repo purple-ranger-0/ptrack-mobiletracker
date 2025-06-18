@@ -51,19 +51,23 @@
 
 ```bash
 pkg update && pkg upgrade -y
-pkg install python git -y
+pkg install python git curl -y
 pkg install cloudflared
 git clone https://github.com/purple-ranger-0/ptrack-mobiletracker.git
 cd ptrack-mobiletracker
 pip install -r requirements.txt
 ```
 ### installation on linux
+
+#### cloudflare installation
+`sudo apt install cloudflared`
+        (or)
 ```bash
-sudo apt update && sudo apt install python3 python3-pip git -y
-sudo apt install cloudflared
-      (or)
 wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
 sudo dpkg -i cloudflared-linux-amd64.deb
+```
+```bash
+sudo apt update && sudo apt install python3 python3-pip git -y
 git clone https://github.com/purple-ranger-0/ptrack-mobiletracker.git
 cd ptrack-mobiletracker
 pip3 install -r requirements.txt
