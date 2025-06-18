@@ -1,6 +1,13 @@
 # 📱 Ptrack-MobileTracker
 
-![Banner](https://via.placeholder.com/800x200?text=Ptrack+Mobile+Tracker+Banner)
+      ██████╗ ████████╗██████╗  █████╗  ██████╗██╗  ██╗
+      ██╔══██╗╚══██╔══╝██╔══██╗██╔══██╗██╔════╝██║ ██╔╝
+      ██████╔╝   ██║   ██████╔╝███████║██║     █████╔╝ 
+      ██╔═══╝    ██║   ██╔══██╗██╔══██║██║     ██╔═██╗ 
+      ██║        ██║   ██║  ██║██║  ██║╚██████╗██║  ██╗
+      ╚═╝        ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
+  
+  
 
 *A phone number intelligence and educational tracking tool by **Purple Ranger**.*
 
