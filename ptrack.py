@@ -22,7 +22,7 @@ VERSION = "2.1.0"
 AUTHOR = "Purple Ranger"
 CONTACT = "purplehub@aol.com"
 WHATSAPP = "https://wa.link/nhd7st"
-SITE = "https://purplehub.serveo.net"
+SITE = "https://purplehub.online"
 
 # ========== Banner ==========
 def show_banner():
